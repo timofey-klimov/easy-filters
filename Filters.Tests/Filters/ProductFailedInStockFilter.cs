@@ -8,7 +8,7 @@ namespace Filters.Tests.Filters
         {
             Create(x => x.InStock,
                 x => x.GetStringFilter()
-                .SetValue("Abc"));
+                .SelectCondition(x => x.Contains("Anb")));
         }
     }
 }

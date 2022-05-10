@@ -4,6 +4,6 @@ namespace Filters.FiltersAbstract.Conventions.Fabric
 {
     public interface IFilterConventionFabric
     {
-        IConvention Create(FilterType filterType);
+        IConvention Create(FilterType filterType, Type valueType);
     }
 }

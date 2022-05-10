@@ -6,6 +6,9 @@ namespace Filters.FiltersAbstract.Builder
     {
         IStringFilterBuilder GetStringFilter();
 
+        IStandardFilterBuilder<T> GetStandardFilter<T>()
+            where T : struct;
+
         FilterInfo Build();
     }
 }

@@ -32,7 +32,7 @@ namespace Filters.FiltersImpl
         {
             var fabric = new FilterConventionFabric();
 
-            return fabric.Create(filterInfo.FilterType)
+            return fabric.Create(filterInfo.FilterType, filterInfo.GetValueType())
                 .CreateFilterExpression<T>(filterInfo, info, parameter);
         }
     }

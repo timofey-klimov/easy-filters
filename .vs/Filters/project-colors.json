@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "4a3828a4-05e5-43b1-b2cd-86e8c19cd5bb": {
+      "ProjectGuid": "4a3828a4-05e5-43b1-b2cd-86e8c19cd5bb",
+      "DisplayName": "Filters",
+      "ColorIndex": 0
+    },
+    "c9518d1a-e38a-4313-8c98-ff67857fa828": {
+      "ProjectGuid": "c9518d1a-e38a-4313-8c98-ff67857fa828",
+      "DisplayName": "Filters.Tests",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}

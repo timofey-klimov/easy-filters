@@ -23,9 +23,11 @@ namespace Filters.Tests
         [Test]
         public void StringFilter_Contains_Success()
         {
-            var expected = _dbContext.Products.Where(x => x.Name.Contains("ea"));
+            var value = "ea";
 
-            var result = _dbContext.Products.Filter(new ProductFilter("ea", FiltersAbstract.Builder.Types.StringCondition.Contains));
+            var expected = _dbContext.Products.Where(x => x.Name.Contains(value));
+
+            var result = _dbContext.Products.Filter(new ProductStringFilterContains(value));
 
             Assert.AreEqual(expected, result);
         }
@@ -33,9 +35,11 @@ namespace Filters.Tests
         [Test]
         public void StringFilter_StartsWith_Success()
         {
-            var expected = _dbContext.Products.Where(x => x.Name.StartsWith("P"));
+            var value = "P";
 
-            var result = _dbContext.Products.Filter(new ProductFilter("P", FiltersAbstract.Builder.Types.StringCondition.StartsWith));
+            var expected = _dbContext.Products.Where(x => x.Name.StartsWith(value));
+
+            var result = _dbContext.Products.Filter(new ProductStringFilterStartsWith(value));
 
             Assert.AreEqual(expected, result);
         }
@@ -43,9 +47,11 @@ namespace Filters.Tests
         [Test]
         public void StringFilter_Equals_Success()
         {
-            var expected = _dbContext.Products.Where(x => x.Name == "Pen");
+            var value = "Pen";
 
-            var result = _dbContext.Products.Filter(new ProductFilter("Pen", FiltersAbstract.Builder.Types.StringCondition.Equals));
+            var expected = _dbContext.Products.Where(x => x.Name == value);
+
+            var result = _dbContext.Products.Filter(new ProductStringFilterEquals(value));
 
             Assert.AreEqual(expected, result);
         }
@@ -56,6 +62,53 @@ namespace Filters.Tests
             Assert.Throws<TypeCheckException>(() => _dbContext.Products.Filter(new ProductFailedInStockFilter()));
         }
 
+        [Test]
+        public void StandardFilter_Equals_Success()
+        {
+            int value = 20;
+
+            var expected = _dbContext.Products.Where(x => x.InStock == value);
+
+            var result = _dbContext.Products.Filter(new ProductStandardFilterEquals(value));
+
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void StandardFilter_NotEquals_Success()
+        {
+            int value = 20;
+
+            var expected = _dbContext.Products.Where(x => x.InStock != value);
+
+            var result = _dbContext.Products.Filter(new ProductStandardFilterNotEquals(value));
+
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void StandardFilter_LessThan_Success()
+        {
+            int value = 50;
+
+            var expected = _dbContext.Products.Where(x => x.InStock < value);
+
+            var result = _dbContext.Products.Filter(new ProductStandardFilterLessThan(value));
+
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void StandardFilter_GreaterThan_Success()
+        {
+            int value = 50;
+
+            var expected = _dbContext.Products.Where(x => x.InStock > 50);
+
+            var result = _dbContext.Products.Filter(new ProductStandardFilterGreaterThan(value));
+
+            Assert.AreEqual(expected, result);
+        }
 
         #region helper
         public void CreateDbContext()

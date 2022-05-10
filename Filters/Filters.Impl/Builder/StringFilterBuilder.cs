@@ -1,12 +1,14 @@
 ﻿using Filters.FiltersAbstract.Builder;
+using Filters.FiltersAbstract.Builder.Condition;
 using Filters.FiltersAbstract.Builder.Types;
 using Filters.FiltersAbstract.Builder.Types.FilterInfo;
+using Filters.FiltersImpl.Builder.Condition;
 
 namespace Filters.FiltersImpl.Builder
 {
     public class StringFilterBuilder : IStringFilterBuilder
     {
-        private readonly StringFilterInfo _info;
+        private StringFilterInfo _info;
         public StringFilterBuilder(FilterInfo filterInfo)
         {
             if (filterInfo is StringFilterInfo info)
@@ -15,16 +17,13 @@ namespace Filters.FiltersImpl.Builder
                 throw new ArgumentException($"argument is not typeof StringFilterInfo");
         }
 
-        public IStringFilterBuilder SelectCondition(StringCondition condition)
+        public void SelectCondition(Action<IStringConditionBuilder> conditionBuilder)
         {
-            _info.Condition = condition;
-            return this;
-        }
+            var builder = new StringConditionBuilder(_info);
 
-        public IStringFilterBuilder SetValue(string value)
-        {
-            _info.Value = value;
-            return this;
+            conditionBuilder(builder);
+
+            _info = builder.Build(); 
         }
     }
 }
