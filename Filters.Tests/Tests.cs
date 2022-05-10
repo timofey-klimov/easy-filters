@@ -1,10 +1,8 @@
 ﻿using Filters.Extensions;
-using Filters.FiltersAbstract;
 using Filters.FiltersImpl;
 using Filters.Tests.Filters;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using System;
 using System.Linq;
 
 namespace Filters.Tests
@@ -106,6 +104,20 @@ namespace Filters.Tests
             var expected = _dbContext.Products.Where(x => x.InStock > 50);
 
             var result = _dbContext.Products.Filter(new ProductStandardFilterGreaterThan(value));
+
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void Complex_Success()
+        {
+            int inStock = 20;
+
+            var name = "ea";
+
+            var expected = _dbContext.Products.Where(x => x.InStock >= inStock && x.Name.Contains(name));
+
+            var result = _dbContext.Products.Filter(new ComplexProductFilter(name, inStock));
 
             Assert.AreEqual(expected, result);
         }
