@@ -3,6 +3,7 @@
     public enum FilterType
     {
         StringFilter,
-        StandardFilter
+        StandardFilter,
+        RangeFilter
     }
 }

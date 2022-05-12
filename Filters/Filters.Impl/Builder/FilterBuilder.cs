@@ -9,6 +9,13 @@ namespace Filters.FiltersImpl.Builder
 
         public FilterInfo Build() => _info;
 
+        public IRangeFilterBuilder<T> GetRangeFilter<T>() 
+            where T : struct
+        {
+            _info = new RangeFilterInfo<T>();
+            return new RangeFilterBuilder<T>(_info);
+        }
+
         public IStandardFilterBuilder<T> GetStandardFilter<T>()
             where T: struct
         {

@@ -9,6 +9,9 @@ namespace Filters.FiltersAbstract.Builder
         IStandardFilterBuilder<T> GetStandardFilter<T>()
             where T : struct;
 
+        IRangeFilterBuilder<T> GetRangeFilter<T>()
+            where T : struct;
+
         FilterInfo Build();
     }
 }

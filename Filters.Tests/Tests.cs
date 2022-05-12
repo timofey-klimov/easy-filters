@@ -122,6 +122,19 @@ namespace Filters.Tests
             Assert.AreEqual(expected, result);
         }
 
+        [Test]
+        public void RangeFilter_Success()
+        {
+            var startValue = 0;
+            var endValue = 100;
+
+            var expected = _dbContext.Products.Where(x => x.InStock >= 0 && x.InStock <= endValue);
+
+            var result = _dbContext.Products.Filter(new RangeProductFilter(startValue, endValue));
+
+            Assert.AreEqual(expected, result);
+        }
+
         #region helper
         public void CreateDbContext()
         {

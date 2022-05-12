@@ -11,17 +11,23 @@ namespace Filters.FiltersImpl.Conventions.Fabric
             return filterType switch
             {
                 FilterType.StringFilter => new StringFilterConvention(),
-                FilterType.StandardFilter => CreateStandardFilterConvention(valueType),
-
+                FilterType.StandardFilter => CreateGenericFilter(typeof(StandardFilterConvention<>), valueType),
+                FilterType.RangeFilter => CreateGenericFilter(typeof(RangeFilterConvention<>), valueType),
                 _ => throw new InvalidOperationException()
             };
         }
 
-        private IConvention CreateStandardFilterConvention(Type valueType)
+        private IConvention CreateGenericFilter(Type filterType, Type valueType)
         {
-            var filterType = typeof(StandardFilterConvention<>);
             var constructed = filterType.MakeGenericType(valueType);
-            return (IConvention)Activator.CreateInstance(constructed);
+
+            if (constructed is null
+                || constructed.IsAbstract
+                || constructed.IsInterface
+                || !typeof(IConvention).IsAssignableFrom(filterType))
+                throw new ArgumentException(nameof(filterType));
+
+            return (IConvention)Activator.CreateInstance(constructed)!;
         }
     }
 }
